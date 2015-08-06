@@ -163,10 +163,10 @@ namespace History
 					which = 1;
 					div = 36;
 					break;
-                case 172: //sinks
-                    which = 1;
-                    div = 38;
-                    break;
+				case 172: //sinks
+					which = 1;
+					div = 38;
+					break;
 				case 15://chair
 				case 20:
 				case 216:
@@ -323,7 +323,7 @@ namespace History
 				case 138:
 				case 142:
 				case 143:
-                case 172: //sinks
+				case 172: //sinks
 				case 173:
 				case 186:
 				case 187:
@@ -1215,9 +1215,9 @@ namespace History
 							int Y = BitConverter.ToInt16(e.Msg.readBuffer, e.Index + 3);
 							ushort type = BitConverter.ToUInt16(e.Msg.readBuffer, e.Index + 5);
 							byte style = e.Msg.readBuffer[e.Index + 7];
-                            if (type == 1 && (etype == 0 || etype == 4))
-                                if (Main.tile[X, Y].type == 21 || Main.tile[X, Y].type == 88)
-                                    return; //Chests and dressers handled separately
+							if (type == 1 && (etype == 0 || etype == 4))
+								if (Main.tile[X, Y].type == 21 || Main.tile[X, Y].type == 88)
+									return; //Chests and dressers handled separately
 							if (X >= 0 && Y >= 0 && X < Main.maxTilesX && Y < Main.maxTilesY)
 							{
 								if (AwaitingHistory[e.Msg.whoAmI])
@@ -1226,14 +1226,14 @@ namespace History
 									TShock.Players[e.Msg.whoAmI].SendTileSquare(X, Y, 5);
 									if (type == 0 && (etype == 0 || etype == 4))
 										adjustFurniture(ref X, ref Y, ref style);
-                                    CommandQueue.Add(new HistoryCommand(X, Y, TShock.Players[e.Msg.whoAmI]));
+									CommandQueue.Add(new HistoryCommand(X, Y, TShock.Players[e.Msg.whoAmI]));
 									e.Handled = true;
 								}
 								else if (regionCheck(TShock.Players[e.Msg.whoAmI], X, Y))
 								{
-                                    //effect only
-                                    adjustFurniture(ref X, ref Y, ref style);
-                                    if (type == 1 && (etype == 0 || etype == 2 || etype == 4))
+									//effect only
+									adjustFurniture(ref X, ref Y, ref style);
+									if (type == 1 && (etype == 0 || etype == 2 || etype == 4))
 										return;
 									logEdit(etype, Main.tile[X, Y], X, Y, type, TShock.Players[e.Msg.whoAmI].User.Name, new List<Vector2>(), style);
 								}
@@ -1245,10 +1245,10 @@ namespace History
 							int X = BitConverter.ToInt16(e.Msg.readBuffer, e.Index);
 							int Y = BitConverter.ToInt16(e.Msg.readBuffer, e.Index + 2);
 							ushort type = BitConverter.ToUInt16(e.Msg.readBuffer, e.Index + 4);
-                            int style = BitConverter.ToInt16(e.Msg.readBuffer, e.Index + 6);
-                            int alt = (byte)e.Msg.readBuffer[e.Index + 8];
-                            int rand = (sbyte)e.Msg.readBuffer[e.Index + 9]; 
-                            bool dir = BitConverter.ToBoolean(e.Msg.readBuffer, e.Index + 10);
+							int style = BitConverter.ToInt16(e.Msg.readBuffer, e.Index + 6);
+							int alt = (byte)e.Msg.readBuffer[e.Index + 8];
+							int rand = (sbyte)e.Msg.readBuffer[e.Index + 9];
+							bool dir = BitConverter.ToBoolean(e.Msg.readBuffer, e.Index + 10);
 							if (X >= 0 && Y >= 0 && X < Main.maxTilesX && Y < Main.maxTilesY)
 							{
 								if (AwaitingHistory[e.Msg.whoAmI])
@@ -1260,7 +1260,7 @@ namespace History
 								}
 								else if (regionCheck(TShock.Players[e.Msg.whoAmI], X, Y))
 								{
-                                    logEdit(1, Main.tile[X, Y], X, Y, type, TShock.Players[e.Msg.whoAmI].User.Name, new List<Vector2>(), (byte)style, alt, rand, dir);
+									logEdit(1, Main.tile[X, Y], X, Y, type, TShock.Players[e.Msg.whoAmI].User.Name, new List<Vector2>(), (byte)style, alt, rand, dir);
 								}
 							}
 						}
@@ -1271,76 +1271,76 @@ namespace History
 							byte flag = e.Msg.readBuffer[e.Index];
 							int X = BitConverter.ToInt16(e.Msg.readBuffer, e.Index + 1);
 							int Y = BitConverter.ToInt16(e.Msg.readBuffer, e.Index + 3);
-                            int style = BitConverter.ToInt16(e.Msg.readBuffer, e.Index + 5);
-                            byte style2 = (byte)style;
+							int style = BitConverter.ToInt16(e.Msg.readBuffer, e.Index + 5);
+							byte style2 = (byte)style;
 							if (X >= 0 && Y >= 0 && X < Main.maxTilesX && Y < Main.maxTilesY)
 							{
-                                //PlaceChest
-                                if (flag == 0 && regionCheck(TShock.Players[e.Msg.whoAmI], X, Y))
-                                {
-                                    if (AwaitingHistory[e.Msg.whoAmI])
-                                    {
-                                        AwaitingHistory[e.Msg.whoAmI] = false;
-                                        TShock.Players[e.Msg.whoAmI].SendTileSquare(X, Y, 5);
-                                        CommandQueue.Add(new HistoryCommand(X, Y, TShock.Players[e.Msg.whoAmI]));
-                                        e.Handled = true;
-                                    }
-                                    else if (regionCheck(TShock.Players[e.Msg.whoAmI], X, Y))
-                                    {
-                                        logEdit(1, Main.tile[X, Y], X, Y, 21, TShock.Players[e.Msg.whoAmI].User.Name, new List<Vector2>(), style2);
-                                    }
-                                    return;
-                                }
-                                //KillChest
-                                if (flag == 1 && regionCheck(TShock.Players[e.Msg.whoAmI], X, Y) && Main.tile[X, Y].type == 21)
+								//PlaceChest
+								if (flag == 0 && regionCheck(TShock.Players[e.Msg.whoAmI], X, Y))
 								{
-                                    if (AwaitingHistory[e.Msg.whoAmI])
-                                    {
-                                        AwaitingHistory[e.Msg.whoAmI] = false;
-                                        TShock.Players[e.Msg.whoAmI].SendTileSquare(X, Y, 5);
-                                        adjustFurniture(ref X, ref Y, ref style2);
-                                        CommandQueue.Add(new HistoryCommand(X, Y, TShock.Players[e.Msg.whoAmI]));
-                                        e.Handled = true;
-                                        return;
-                                    }
-                                    adjustFurniture(ref X, ref Y, ref style2);
+									if (AwaitingHistory[e.Msg.whoAmI])
+									{
+										AwaitingHistory[e.Msg.whoAmI] = false;
+										TShock.Players[e.Msg.whoAmI].SendTileSquare(X, Y, 5);
+										CommandQueue.Add(new HistoryCommand(X, Y, TShock.Players[e.Msg.whoAmI]));
+										e.Handled = true;
+									}
+									else if (regionCheck(TShock.Players[e.Msg.whoAmI], X, Y))
+									{
+										logEdit(1, Main.tile[X, Y], X, Y, 21, TShock.Players[e.Msg.whoAmI].User.Name, new List<Vector2>(), style2);
+									}
+									return;
+								}
+								//KillChest
+								if (flag == 1 && regionCheck(TShock.Players[e.Msg.whoAmI], X, Y) && Main.tile[X, Y].type == 21)
+								{
+									if (AwaitingHistory[e.Msg.whoAmI])
+									{
+										AwaitingHistory[e.Msg.whoAmI] = false;
+										TShock.Players[e.Msg.whoAmI].SendTileSquare(X, Y, 5);
+										adjustFurniture(ref X, ref Y, ref style2);
+										CommandQueue.Add(new HistoryCommand(X, Y, TShock.Players[e.Msg.whoAmI]));
+										e.Handled = true;
+										return;
+									}
+									adjustFurniture(ref X, ref Y, ref style2);
 									Queue(TShock.Players[e.Msg.whoAmI].User.Name, X, Y, 0, Main.tile[X, Y].type, style2, Main.tile[X, Y].color());
-                                    return;
-                                }
-                                //PlaceDresser
-                                if (flag == 2 && regionCheck(TShock.Players[e.Msg.whoAmI], X, Y))
-                                {
-                                    if (AwaitingHistory[e.Msg.whoAmI])
-                                    {
-                                        AwaitingHistory[e.Msg.whoAmI] = false;
-                                        TShock.Players[e.Msg.whoAmI].SendTileSquare(X, Y, 5);
-                                        CommandQueue.Add(new HistoryCommand(X, Y, TShock.Players[e.Msg.whoAmI]));
-                                        e.Handled = true;
-                                    }
-                                    else if (regionCheck(TShock.Players[e.Msg.whoAmI], X, Y))
-                                    {
-                                        logEdit(1, Main.tile[X, Y], X, Y, 88, TShock.Players[e.Msg.whoAmI].User.Name, new List<Vector2>(), style2);
-                                    }
-                                    return;
-                                }
-                                //KillDresser
-                                if (flag == 3 && regionCheck(TShock.Players[e.Msg.whoAmI], X, Y) && Main.tile[X, Y].type == 88)
-                                {
-                                    if (AwaitingHistory[e.Msg.whoAmI])
-                                    {
-                                        AwaitingHistory[e.Msg.whoAmI] = false;
-                                        TShock.Players[e.Msg.whoAmI].SendTileSquare(X, Y, 5);
-                                        adjustFurniture(ref X, ref Y, ref style2);
-                                        CommandQueue.Add(new HistoryCommand(X, Y, TShock.Players[e.Msg.whoAmI]));
-                                        e.Handled = true;
-                                        return;
-                                    }
-                                    adjustFurniture(ref X, ref Y, ref style2);
-                                    Queue(TShock.Players[e.Msg.whoAmI].User.Name, X, Y, 0, Main.tile[X, Y].type, style2, Main.tile[X, Y].color());
-                                    return;
-                                }
+									return;
+								}
+								//PlaceDresser
+								if (flag == 2 && regionCheck(TShock.Players[e.Msg.whoAmI], X, Y))
+								{
+									if (AwaitingHistory[e.Msg.whoAmI])
+									{
+										AwaitingHistory[e.Msg.whoAmI] = false;
+										TShock.Players[e.Msg.whoAmI].SendTileSquare(X, Y, 5);
+										CommandQueue.Add(new HistoryCommand(X, Y, TShock.Players[e.Msg.whoAmI]));
+										e.Handled = true;
+									}
+									else if (regionCheck(TShock.Players[e.Msg.whoAmI], X, Y))
+									{
+										logEdit(1, Main.tile[X, Y], X, Y, 88, TShock.Players[e.Msg.whoAmI].User.Name, new List<Vector2>(), style2);
+									}
+									return;
+								}
+								//KillDresser
+								if (flag == 3 && regionCheck(TShock.Players[e.Msg.whoAmI], X, Y) && Main.tile[X, Y].type == 88)
+								{
+									if (AwaitingHistory[e.Msg.whoAmI])
+									{
+										AwaitingHistory[e.Msg.whoAmI] = false;
+										TShock.Players[e.Msg.whoAmI].SendTileSquare(X, Y, 5);
+										adjustFurniture(ref X, ref Y, ref style2);
+										CommandQueue.Add(new HistoryCommand(X, Y, TShock.Players[e.Msg.whoAmI]));
+										e.Handled = true;
+										return;
+									}
+									adjustFurniture(ref X, ref Y, ref style2);
+									Queue(TShock.Players[e.Msg.whoAmI].User.Name, X, Y, 0, Main.tile[X, Y].type, style2, Main.tile[X, Y].color());
+									return;
+								}
 
-                            }
+							}
 						}
 						break;
 					case PacketTypes.PaintTile:
@@ -1378,48 +1378,48 @@ namespace History
 				}
 			}
 		}
-        void OnInitialize(EventArgs e)
-        {
-            TShockAPI.Commands.ChatCommands.Add(new Command("history.get", HistoryCmd, "history"));
-            TShockAPI.Commands.ChatCommands.Add(new Command("history.prune", Prune, "prunehist"));
-            TShockAPI.Commands.ChatCommands.Add(new Command("history.reenact", Reenact, "reenact"));
-            TShockAPI.Commands.ChatCommands.Add(new Command("history.rollback", Rollback, "rollback"));
-            TShockAPI.Commands.ChatCommands.Add(new Command("history.rollback", Undo, "rundo"));
+		void OnInitialize(EventArgs e)
+		{
+			TShockAPI.Commands.ChatCommands.Add(new Command("history.get", HistoryCmd, "history"));
+			TShockAPI.Commands.ChatCommands.Add(new Command("history.prune", Prune, "prunehist"));
+			TShockAPI.Commands.ChatCommands.Add(new Command("history.reenact", Reenact, "reenact"));
+			TShockAPI.Commands.ChatCommands.Add(new Command("history.rollback", Rollback, "rollback"));
+			TShockAPI.Commands.ChatCommands.Add(new Command("history.rollback", Undo, "rundo"));
 
-            switch (TShock.Config.StorageType.ToLower())
-            {
-                case "mysql":
-                    string[] host = TShock.Config.MySqlHost.Split(':');
-                    Database = new MySqlConnection()
-                    {
-                        ConnectionString = string.Format("Server={0}; Port={1}; Database={2}; Uid={3}; Pwd={4};",
-                            host[0],
-                            host.Length == 1 ? "3306" : host[1],
-                            TShock.Config.MySqlDbName,
-                            TShock.Config.MySqlUsername,
-                            TShock.Config.MySqlPassword)
-                    };
-                    break;
-                case "sqlite":
-                    string sql = Path.Combine(TShock.SavePath, "history.sqlite");
-                    Database = new SqliteConnection(string.Format("uri=file://{0},Version=3", sql));
-                    break;
-            }
-            SqlTableCreator sqlcreator = new SqlTableCreator(Database,
-                Database.GetSqlType() == SqlType.Sqlite ? (IQueryBuilder)new SqliteQueryCreator() : new MysqlQueryCreator());
-            sqlcreator.EnsureTableStructure(new SqlTable("History",
-                new SqlColumn("Time", MySqlDbType.Int32),
-                new SqlColumn("Account", MySqlDbType.VarChar) { Length = 50 },
-                new SqlColumn("Action", MySqlDbType.Int32),
-                new SqlColumn("XY", MySqlDbType.Int32),
-                new SqlColumn("Data", MySqlDbType.Int32),
-                new SqlColumn("Style", MySqlDbType.Int32),
-                new SqlColumn("Paint", MySqlDbType.Int32),
-                new SqlColumn("WorldID", MySqlDbType.Int32),
-                new SqlColumn("Text", MySqlDbType.VarChar) { Length = 50 },
-                new SqlColumn("Alternate", MySqlDbType.Int32),
-                new SqlColumn("Random", MySqlDbType.Int32),
-                new SqlColumn("Direction", MySqlDbType.Int32)));
+			switch (TShock.Config.StorageType.ToLower())
+			{
+				case "mysql":
+					string[] host = TShock.Config.MySqlHost.Split(':');
+					Database = new MySqlConnection()
+					{
+						ConnectionString = string.Format("Server={0}; Port={1}; Database={2}; Uid={3}; Pwd={4};",
+							host[0],
+							host.Length == 1 ? "3306" : host[1],
+							TShock.Config.MySqlDbName,
+							TShock.Config.MySqlUsername,
+							TShock.Config.MySqlPassword)
+					};
+					break;
+				case "sqlite":
+					string sql = Path.Combine(TShock.SavePath, "history.sqlite");
+					Database = new SqliteConnection(string.Format("uri=file://{0},Version=3", sql));
+					break;
+			}
+			SqlTableCreator sqlcreator = new SqlTableCreator(Database,
+				Database.GetSqlType() == SqlType.Sqlite ? (IQueryBuilder)new SqliteQueryCreator() : new MysqlQueryCreator());
+			sqlcreator.EnsureTableStructure(new SqlTable("History",
+				new SqlColumn("Time", MySqlDbType.Int32),
+				new SqlColumn("Account", MySqlDbType.VarChar) { Length = 50 },
+				new SqlColumn("Action", MySqlDbType.Int32),
+				new SqlColumn("XY", MySqlDbType.Int32),
+				new SqlColumn("Data", MySqlDbType.Int32),
+				new SqlColumn("Style", MySqlDbType.Int32),
+				new SqlColumn("Paint", MySqlDbType.Int32),
+				new SqlColumn("WorldID", MySqlDbType.Int32),
+				new SqlColumn("Text", MySqlDbType.VarChar) { Length = 50 },
+				new SqlColumn("Alternate", MySqlDbType.Int32),
+				new SqlColumn("Random", MySqlDbType.Int32),
+				new SqlColumn("Direction", MySqlDbType.Int32)));
 
 			string datePath = Path.Combine(TShock.SavePath, "date.dat");
 			if (!File.Exists(datePath))

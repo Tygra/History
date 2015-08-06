@@ -16,11 +16,11 @@ namespace History
 		public int x;
 		public int y;
 		public string text;
-        public byte alt;
-        public sbyte random;
-        public bool direction;
+		public byte alt;
+		public sbyte random;
+		public bool direction;
 
-        public void Reenact()
+		public void Reenact()
 		{
 			switch (action)
 			{
@@ -145,7 +145,7 @@ namespace History
 		}
 		public void Rollback()
 		{
-            switch (action)
+			switch (action)
 			{
 				case 0:
 				case 4://del tile
@@ -181,12 +181,12 @@ namespace History
 						break;
 					}
 
-                    bool success = false;
-                    
-					    success = WorldGen.PlaceTile(x, y, data, false, true, 0, style: style);
-                    if (!success)
-                        success = WorldGen.PlaceObject(x, y, data, false, style: style, alternate: alt, random: random, direction: direction ? 1 : -1);
-                    
+					bool success = false;
+
+					success = WorldGen.PlaceTile(x, y, data, false, true, 0, style: style);
+					if (!success)
+						success = WorldGen.PlaceObject(x, y, data, false, style: style, alternate: alt, random: random, direction: direction ? 1 : -1);
+
 					History.paintFurniture(data, x, y, (byte)(paint & 127));
 
 				frameOnly:
