@@ -15,7 +15,7 @@ using TShockAPI.DB;
 
 namespace History
 {
-	[ApiVersion(1, 20)]
+	[ApiVersion(1, 21)]
 	public class History : TerrariaPlugin
 	{
 		public static List<Action> Actions = new List<Action>(SaveCount);
