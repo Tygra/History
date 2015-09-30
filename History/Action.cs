@@ -16,6 +16,9 @@ namespace History
 		public int x;
 		public int y;
 		public string text;
+		public byte alt;
+		public sbyte random;
+		public bool direction;
 
 		public void Reenact()
 		{
@@ -118,6 +121,10 @@ namespace History
 					WorldGen.SlopeTile(x, y, data);
 					TSPlayer.All.SendTileSquare(x, y, 1);
 					break;
+				case 15:
+					//Uh wtf does "frame track" mean
+					//Too lazy to find atm
+					break;
 				case 25://paint tile
 					if (Main.tile[x, y].active())
 					{
@@ -174,11 +181,15 @@ namespace History
 						break;
 					}
 
-					WorldGen.PlaceTile(x, y, data, false, true, 0, style: style);
+					bool success = false;
+
+					success = WorldGen.PlaceTile(x, y, data, false, true, 0, style: style);
+					if (!success)
+						success = WorldGen.PlaceObject(x, y, data, false, style: style, alternate: alt, random: random, direction: direction ? 1 : -1);
 
 					History.paintFurniture(data, x, y, (byte)(paint & 127));
 
-			frameOnly:
+				frameOnly:
 					//restore slopes
 					if ((paint & 128) == 128)
 					{
@@ -186,8 +197,8 @@ namespace History
 					}
 					else if (data == 314)
 					{
-						Main.tile[x, y].frameX = (short)(style-1);
-						Main.tile[x, y].frameY = (short)((paint >> 8)-1);
+						Main.tile[x, y].frameX = (short)(style - 1);
+						Main.tile[x, y].frameY = (short)((paint >> 8) - 1);
 					}
 					else
 						Main.tile[x, y].slope((byte)(paint >> 8));
@@ -305,6 +316,9 @@ namespace History
 					Main.tile[x, y].slope((byte)(paint >> 8));
 					Main.tile[x, y].halfBrick((paint & 128) == 128);
 					TSPlayer.All.SendTileSquare(x, y, 1);
+					break;
+				case 15: //frame track
+					//see above
 					break;
 				case 25://paint tile
 					if (Main.tile[x, y].active())
